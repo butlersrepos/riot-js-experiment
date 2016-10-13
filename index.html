@@ -1,5 +1,6 @@
 <html>
     <head>
+        <script src='./build/js/mixins/add-title.js'></script>
         <script src="./node_modules/riot/riot+compiler.min.js"></script>
         <script src="./build/js/riot-bundle.js"></script>
         <script src="./build/js/solo-dolo.js"></script>
@@ -11,6 +12,12 @@
             body > * {
                 flex: 1 1 auto;
                 flex-basis: 33%;
+            }
+            .mixin-title {
+                font-family: sans-serif;
+                text-decoration: underline;
+                text-transform: uppercase;
+                color: #bada55;
             }
         </style>
     </head>
@@ -32,6 +39,7 @@
 
                 this.on('before-mount', function() {
                     console.log('I am nearly there!');
+                    console.log(this.root);
                 });               
 
                 this.on('mount', function() {
@@ -73,6 +81,7 @@
         </script>
 
         <script>
+            riot.mixin(addTitleMixin);
             riot.mount('*');
         </script>
     </body>
