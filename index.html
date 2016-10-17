@@ -82,7 +82,19 @@
 
         <script>
             riot.mixin(addTitleMixin);
-            riot.mount('*');
+
+            var realService = {
+                fetch: function() {
+                    console.log('Real fetch used successfully!');
+                    return Promise.resolve([
+                        {title: 'Item One'},
+                        {title: 'Item Two'},
+                        {title: 'Item Three'}
+                    ]);
+                }
+            };
+
+            riot.mount('*', {itemService: realService});
         </script>
     </body>
 </html>

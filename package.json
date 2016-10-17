@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "karma start karma-riot-config.js",
-    "build": "npm run build-js & npm run bundle-js & npm run copy-imgs & npm run copy-mixins",
+    "build": "npm run bundle-js & npm run build-js & npm run copy-imgs & npm run copy-mixins",
     "build-js": "riot src/solo-dolo.tag build/js/",
     "bundle-js": "riot src/ build/js/riot-bundle.js",
     "copy-imgs": "cpx 'src/img/*' build/img",

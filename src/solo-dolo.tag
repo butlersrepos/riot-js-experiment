@@ -1,5 +1,5 @@
 <solo-dolo>
-    <h1></h1>
+    <h1>I was created in the index.html</h1>
     <img src="build/img/themoon.jpg" />
     
     <style scoped>
