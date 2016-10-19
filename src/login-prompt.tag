@@ -1,14 +1,31 @@
 <login-prompt>
-    <h1>{ name }</h1>
-    <button class="login" onclick={ onLogin }>
-        Login
-    </button>
-    <img src="build/img/login.png" />
+    <img src="build/img/login.png"></img>
+    
+    <div>
+        <input name=username>
+        <label for="username">Username</label>
+    </div>
+    <div>
+        <input name=password type=password>
+        <label for="password">Password</label>
+    </div>
+
+    <button class="login" onclick={ onLogin }>Login</button>
 
     <script>
         this.name = 'Login Prompt';
         onLogin() {
-            console.log("WE'RE DOING IT!");
+            let destination = '/login-failure';
+
+            if( this.validateInputs() ) {
+                destination = '/account-info';
+            } 
+
+            riot.route(destination);
+        }
+        
+        validateInputs() {
+            return this.username.value.length > 0 && this.password.value.length > 0;
         }
     </script>
 
@@ -17,7 +34,6 @@
             text-transform: uppercase;
         }
 
-        <!-- this won't bleed into solo-dolo's scope -->
         img {
             height: 75px;
             width: 75px;

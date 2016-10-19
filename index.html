@@ -1,124 +1,56 @@
 <html>
     <head>
-        <script src='./build/js/mixins/add-title.js'></script>
         <script src="./node_modules/riot/riot+compiler.min.js"></script>
         <script src="./build/js/riot-bundle.js"></script>
-        <script src="./build/js/solo-dolo.js"></script>
-        <style>
-            body {
-                display: flex;
-                flex-wrap: wrap;
-            }
-            body > * {
-                flex: 1 1 auto;
-                flex-basis: 33%;
-            }
-            .mixin-title {
-                font-family: sans-serif;
-                text-decoration: underline;
-                text-transform: uppercase;
-                color: #bada55;
-            }
-        </style>
     </head>
     <body>
-        <login-prompt></login-prompt>
-        <todo-list></todo-list>
-        <solo-dolo></solo-dolo>
-        <scripted-bit></scripted-bit>
-        <cactus-watcher></cactus-watcher>
-        
+        <main></main>
+        <script>
+            riot.route('/welcome', function() {
+                riot.mount('main', 'login-prompt');
+            });
 
-        <script type="riot/tag">
-            <scripted-bit>
-                <h1>You've only OPENED the browser. I was BORN in it.</h1>
-                <button onclick={ destroyMe }>REMOVE ME</button>
-                
-                <!-- DO NOT USE AN INTERNAL <script></script> TAG WHEN DEFINING TAGS IN THE HTML! -->
-                destroyMe() {
-                    this.unmount();
-                }
+            riot.route('/account-info', function() {
+                riot.mount('main', 'account-info', {service: userService});
+            });
 
-                this.on('before-mount', function() {
-                    console.log('I am nearly there!');
-                    console.log(this.root);
-                });               
+            riot.route('/login-failure', function() {
+                riot.mount('main', 'login-failure');
+            });
 
-                this.on('mount', function() {
-                    console.log('I AM HERE!');
-                });
-                
-                this.on('before-unmount', function() {
-                    console.log('Before I go...');
-                });
+            // On ANY route, need a new routing context so that both route-filters can catch
+            let catchAll = riot.route.create();
+            catchAll('*', function(collection) {
+               document.querySelector('html').className = collection;
+            });
 
-                this.on('unmount', function() {
-                    console.log('...screw you.');
-                });
-
-                <style scoped>
-                    <!-- This rule block won't work because we scoped our css -->
-                    scripted-bit {
-                        background: yellow;
-                    }
-
-                    <!-- This is the way to refer to this element in a scoped style block -->
-                    :scope {
-                        margin: 1em;
-                        padding: 1em;
-                        width: 25vw; 
-                        border: 2px solid grey;
-                        display: block;
-                        background: #222;
-                    }
-
-                    h1 {
-                        color: white;
-                        font-family: cursive, Comic Sans, MS Sans, sans-serif;
-                        background: #111;
-                        text-align: center;
-                    }
-                </style>
-            </scripted-bit>
+            riot.route.start(true);
+            riot.route('/welcome', 'Eric\'s RiotJS  App');
         </script>
 
         <script>
-            // Creates an observable cactus that can emit events and allow subscription to them
-            window.observedCactus = (function observedCactus() {
-                riot.observable(this);
-                this.touch = () => {
-                    this.trigger('prick');
+            let userService = {
+                getName() {
+                    return 'Brad Pitt';
+                },
+                getTransactions() {
+                    return [
+                        { title: 'Diamond Yacht', amount: '-100000000'},
+                        { title: 'Personal Airplane', amount: '-250000'},
+                        { title: 'Made a movie', amount: '+25000000'},
+                        { title: 'Chinese Food', amount: '-74.83'},
+                        { title: 'Charity', amount: '-20000'}
+                    ];
                 }
-                return this;
-            })();
-
-            // Adds our global mixin, prepending each custom elements name to its markup
-            riot.mixin(addTitleMixin);
-
-            // Injectable service
-            var realService = {
-                fetch: function() {
-                    console.log('Real fetch used successfully!');
-                    return Promise.resolve([
-                        {title: 'Item One'},
-                        {title: 'Item Two'},
-                        {title: 'Item Three'}
-                    ]);
-                }
-            };
-            // Injects this service into each top level (not nested) tag, accessible via this.opts (see todo-list.tag)
-            riot.mount('*', {itemService: realService});
-
-            // Very basic router listener
-            riot.route('/page1', function() {
-                console.log('I am the callback for route actions to /page1');
-            });
-
-            // equivalent to riot.route.start(); riot.route.exec(); to exercise current page's route'
-            riot.route.start(true);
-
-            // Start us out
-            riot.route('/page1', 'The First Page');
+            }
         </script>
+
+        <style>
+            html.account-info {
+                background: black;
+                color: white;
+                font-family: sans-serif;
+            }
+        </style>
     </body>
 </html>
