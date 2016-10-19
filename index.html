@@ -108,6 +108,17 @@
             };
             // Injects this service into each top level (not nested) tag, accessible via this.opts (see todo-list.tag)
             riot.mount('*', {itemService: realService});
+
+            // Very basic router listener
+            riot.route('/page1', function() {
+                console.log('I am the callback for route actions to /page1');
+            });
+
+            // equivalent to riot.route.start(); riot.route.exec(); to exercise current page's route'
+            riot.route.start(true);
+
+            // Start us out
+            riot.route('/page1', 'The First Page');
         </script>
     </body>
 </html>
