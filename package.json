@@ -5,11 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "karma start karma-riot-config.js",
-    "build": "npm run bundle-js & npm run build-js & npm run copy-imgs & npm run copy-mixins",
-    "build-js": "riot src/solo-dolo.tag build/js/",
+    "build": "npm run bundle-js & npm run copy-imgs",
     "bundle-js": "riot src/ build/js/riot-bundle.js",
-    "copy-imgs": "cpx 'src/img/*' build/img",
-    "copy-mixins": "cpx 'src/mixins/*' build/js/mixins"
+    "copy-imgs": "cpx 'src/img/*' build/img"
   },
   "keywords": [],
   "author": "",
@@ -20,13 +18,12 @@
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^2.0.0",
     "karma-mocha": "^1.2.0",
-    "karma-phantomjs-launcher": "^1.0.2",
     "karma-riot": "^1.1.0",
-    "mocha": "^3.1.0",
-    "riot": "^2.6.3"
+    "mocha": "^3.1.0"
   },
   "dependencies": {
     "cpx": "~1.5.0",
-    "node-sass": "^3.10.1"
+    "node-sass": "^3.10.1",
+    "riot": "^2.6.3"
   }
 }

@@ -1,6 +1,6 @@
 <login-prompt>
     <img src="build/img/login.png"></img>
-    
+
     <div>
         <input name=username>
         <label for="username">Username</label>
