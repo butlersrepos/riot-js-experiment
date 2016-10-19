@@ -4,7 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "karma start karma-riot-config.js"
+    "test": "karma start karma-riot-config.js",
+    "build": "npm run build-js & npm run bundle-js & npm run copy-imgs",
+    "build-js": "riot src/solo-dolo.tag build/js/",
+    "bundle-js": "riot src/ build/js/riot-bundle.js",
+    "copy-imgs": "cpx 'src/img/*' build/img"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +21,10 @@
     "karma-mocha": "^1.2.0",
     "karma-phantomjs-launcher": "^1.0.2",
     "karma-riot": "^1.1.0",
-    "mocha": "^3.1.0"
+    "mocha": "^3.1.0",
+    "riot": "^2.6.3"
+  },
+  "dependencies": {
+    "cpx": "~1.5.0"
   }
 }

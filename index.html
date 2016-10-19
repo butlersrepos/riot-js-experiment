@@ -1,2 +1,79 @@
 <html>
+    <head>
+        <script src="./node_modules/riot/riot+compiler.min.js"></script>
+        <script src="./build/js/riot-bundle.js"></script>
+        <script src="./build/js/solo-dolo.js"></script>
+        <style>
+            body {
+                display: flex;
+                flex-wrap: wrap;
+            }
+            body > * {
+                flex: 1 1 auto;
+                flex-basis: 33%;
+            }
+        </style>
+    </head>
+    <body>
+        <login-prompt></login-prompt>
+        <todo-list></todo-list>
+        <solo-dolo></solo-dolo>
+        <scripted-bit></scripted-bit>
+
+        <script type="riot/tag">
+            <scripted-bit>
+                <h1>You've only OPENED the browser. I was BORN in it.</h1>
+                <button onclick={ destroyMe }>REMOVE ME</button>
+                
+                <!-- DO NOT USE AN INTERNAL <script></script> TAG WHEN DEFINING TAGS IN THE HTML! -->
+                destroyMe() {
+                    this.unmount();
+                }
+
+                this.on('before-mount', function() {
+                    console.log('I am nearly there!');
+                });               
+
+                this.on('mount', function() {
+                    console.log('I AM HERE!');
+                });
+                
+                this.on('before-unmount', function() {
+                    console.log('Before I go...');
+                });
+
+                this.on('unmount', function() {
+                    console.log('...screw you.');
+                });
+
+                <style scoped>
+                    <!-- This rule block won't work because we scoped our css -->
+                    scripted-bit {
+                        background: yellow;
+                    }
+
+                    <!-- This is the way to refer to this element in a scoped style block -->
+                    :scope {
+                        margin: 1em;
+                        padding: 1em;
+                        width: 25vw; 
+                        border: 2px solid grey;
+                        display: block;
+                        background: #222;
+                    }
+
+                    h1 {
+                        color: white;
+                        font-family: cursive, Comic Sans, MS Sans, sans-serif;
+                        background: #111;
+                        text-align: center;
+                    }
+                </style>
+            </scripted-bit>
+        </script>
+
+        <script>
+            riot.mount('*');
+        </script>
+    </body>
 </html>
