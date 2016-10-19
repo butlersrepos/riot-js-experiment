@@ -26,6 +26,8 @@
         <todo-list></todo-list>
         <solo-dolo></solo-dolo>
         <scripted-bit></scripted-bit>
+        <cactus-watcher></cactus-watcher>
+        
 
         <script type="riot/tag">
             <scripted-bit>
@@ -81,8 +83,19 @@
         </script>
 
         <script>
+            // Creates an observable cactus that can emit events and allow subscription to them
+            window.observedCactus = (function observedCactus() {
+                riot.observable(this);
+                this.touch = () => {
+                    this.trigger('prick');
+                }
+                return this;
+            })();
+
+            // Adds our global mixin, prepending each custom elements name to its markup
             riot.mixin(addTitleMixin);
 
+            // Injectable service
             var realService = {
                 fetch: function() {
                     console.log('Real fetch used successfully!');
@@ -93,7 +106,7 @@
                     ]);
                 }
             };
-
+            // Injects this service into each top level (not nested) tag, accessible via this.opts (see todo-list.tag)
             riot.mount('*', {itemService: realService});
         </script>
     </body>
